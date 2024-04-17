@@ -1,0 +1,381 @@
+Question 01:
+
+import java.util.Scanner;
+import java.util.Stack;
+
+class CustomStack {
+    private Stack<String> stack;
+
+    public CustomStack() {
+        this.stack = new Stack<>();
+    }
+
+    public void push(String shipment) {
+        stack.push(shipment);
+    }
+
+    public void pop() {
+        if (!stack.isEmpty()) {
+            System.out.println("Shipment " + stack.pop() + " completed.");
+        } else {
+            System.out.println("Error: Stack is empty, no shipments to process.");
+        }
+    }
+
+    public void display() {
+        System.out.println("Current shipments in stack: " + stack);
+    }
+}
+
+public class MainClass {
+    public static void main(String[] args) {
+        CustomStack customStack = new CustomStack();
+
+        // Adding shipments to the stack
+        customStack.push("S00001");
+        customStack.push("S00002");
+        customStack.push("S00003");
+        customStack.push("S00004");
+        customStack.push("S00005");
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            customStack.display();
+            System.out.print("Has the shipment completed processing? (Yes/No): ");
+            String input = scanner.nextLine().toLowerCase();
+
+            if (input.equals("yes")) {
+                customStack.pop();
+            } else if (input.equals("no")) {
+                System.out.println("Shipment not removed from stack.");
+            } else {
+                System.out.println("Invalid input. Please enter 'Yes' or 'No'.");
+            }
+
+            System.out.print("Do you want to continue (Yes/No): ");
+            input = scanner.nextLine().toLowerCase();
+
+            if (input.equals("no")) {
+                break;
+            } else if (!input.equals("yes")) {
+                System.out.println("Invalid input. Exiting...");
+                break;
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+Question 02
+
+i.
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Scanner;
+
+class CustomQueue {
+    private Queue<String> queue;
+    private static final int MAX_CAPACITY = 5;
+
+    public CustomQueue() {
+        this.queue = new LinkedList<>();
+    }
+
+    public void enqueue(String task) {
+        if (queue.size() < MAX_CAPACITY) {
+            queue.add(task);
+            System.out.println("Task added: " + task);
+        } else {
+            System.out.println("Error: Queue is full. Cannot add task: " + task);
+        }
+    }
+
+    public void dequeue() {
+        if (!queue.isEmpty()) {
+            String task = queue.poll();
+            System.out.println("Task completed: " + task);
+        } else {
+            System.out.println("Error: Queue is empty. No tasks to remove.");
+        }
+    }
+
+    public void display() {
+        System.out.println("Tasks in queue: " + queue);
+    }
+}
+
+public class MainClass {
+    public static void main(String[] args) {
+        CustomQueue customQueue = new CustomQueue();
+        Scanner scanner = new Scanner(System.in);
+
+        // Adding 3 tasks to the queue
+        customQueue.enqueue("Task 1");
+        customQueue.enqueue("Task 2");
+        customQueue.enqueue("Task 3");
+
+        while (true) {
+            customQueue.display();
+            System.out.print("Has the task completed? (Yes/No): ");
+            String input = scanner.nextLine().toLowerCase();
+
+            if (input.equals("yes")) {
+                customQueue.dequeue();
+            } else if (input.equals("no")) {
+                System.out.println("Task not removed from queue.");
+            } else {
+                System.out.println("Invalid input. Please enter 'Yes' or 'No'.");
+            }
+
+            System.out.print("Do you want to continue (Yes/No): ");
+            input = scanner.nextLine().toLowerCase();
+
+            if (input.equals("no")) {
+                break;
+            } else if (!input.equals("yes")) {
+                System.out.println("Invalid input. Exiting...");
+                break;
+            }
+        }
+
+        scanner.close();
+    }
+}
+
+
+Question 03
+
+node.java
+
+class Node {
+    double data;
+    Node left, right;
+
+    public Node(double data) {
+        this.data = data;
+        left = right = null;
+    }
+}
+
+customTree.java
+
+class CustomTree {
+    Node root;
+
+    public CustomTree() {
+        root = null;
+    }
+
+    // Function to insert a profit value into the BST
+    public void insert(double data) {
+        root = insertRecursive(root, data);
+    }
+
+    private Node insertRecursive(Node root, double data) {
+        if (root == null) {
+            root = new Node(data);
+            return root;
+        }
+
+        // Insert on the left if data is smaller
+        if (data < root.data) {
+            root.left = insertRecursive(root.left, data);
+        }
+        // Insert on the right if data is larger
+        else if (data > root.data) {
+            root.right = insertRecursive(root.right, data);
+        }
+
+        return root;
+    }
+
+    // Function to display profits within a specific period in ascending order
+    public void displayInRange(Node node, double low, double high) {
+        if (node == null) {
+            return;
+        }
+
+        // Traverse left subtree if root data is greater than low
+        if (node.data > low) {
+            displayInRange(node.left, low, high);
+        }
+
+        // Display the node data if it's within the range
+        if (node.data >= low && node.data <= high) {
+            System.out.print(node.data + " ");
+        }
+
+        // Traverse right subtree if root data is less than high
+        if (node.data < high) {
+            displayInRange(node.right, low, high);
+        }
+    }
+}
+
+
+Main.java
+public class Main {
+    public static void main(String[] args) {
+        CustomTree tree = new CustomTree();
+
+        // Inserting the provided profit values into the BST
+        tree.insert(400);
+        tree.insert(509);
+        tree.insert(340);
+        tree.insert(780);
+        tree.insert(230);
+        tree.insert(380);
+        tree.insert(480);
+        tree.insert(350);
+        tree.insert(490);
+        tree.insert(80);
+
+        // Displaying profits within a specific range (Ascending Order)
+        System.out.println("Profits within the range 200 to 500:");
+        tree.displayInRange(tree.root, 200, 500);
+    }
+}
+
+sql file
+Profits within the range 200 to 500:
+230.0 340.0 350.0 380.0 400.0 480.0 490.0
+
+Question 04
+
+Sorting.java
+public class Sorting {
+    public static void main(String[] args) {
+        // Initialize the math and science arrays
+        int[] math = {22, 78, 26, 56, 28, 84, 67, 87, 24, 50};
+        int[] science = {78, 89, 30, 7, 21, 14, 2, 2, 18};
+
+        // Display original arrays
+        System.out.println("Math Array before sorting:");
+        displayArray(math);
+
+        System.out.println("\nScience Array before sorting:");
+        displayArray(science);
+
+        // Perform quick sort on math array
+        quickSort(math, 0, math.length - 1);
+
+        // Perform quick sort on science array
+        quickSort(science, 0, science.length - 1);
+
+        // Display sorted arrays
+        System.out.println("\nMath Array after sorting:");
+        displayArray(math);
+
+        System.out.println("\nScience Array after sorting:");
+        displayArray(science);
+    }
+
+    // Function to display an array
+    public static void displayArray(int[] arr) {
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+    }
+
+    // Function to perform quick sort
+    public static void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            // Partition the array
+            int pivotIndex = partition(arr, low, high);
+
+            // Recursively sort elements before and after partition
+            quickSort(arr, low, pivotIndex - 1);
+            quickSort(arr, pivotIndex + 1, high);
+        }
+    }
+
+    // Function to partition the array
+    public static int partition(int[] arr, int low, int high) {
+        // Choose the pivot element (last element in this case)
+        int pivot = arr[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (arr[j] < pivot) {
+                i++;
+                // Swap arr[i] and arr[j]
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+
+        // Swap arr[i+1] and arr[high] (pivot)
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+
+        return i + 1;
+    }
+}
+
+
+quickSort.java
+
+// Function to perform quick sort
+public static void quickSort(int[] arr, int low, int high) {
+    if (low < high) {
+        // Partition the array
+        int pivotIndex = partition(arr, low, high);
+
+        // Recursively sort elements before and after partition
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
+    }
+}
+partition.java
+// Function to partition the array
+public static int partition(int[] arr, int low, int high) {
+    // Choose the pivot element (last element in this case)
+    int pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] < pivot) {
+            i++;
+            // Swap arr[i] and arr[j]
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+
+    // Swap arr[i+1] and arr[high] (pivot)
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;
+}
+
+displayArray.jave
+// Function to display an array
+public static void displayArray(int[] arr) {
+    for (int num : arr) {
+        System.out.print(num + " ");
+    }
+    System.out.println();
+}
+
+javascript.java
+Math Array before sorting:
+22 78 26 56 28 84 67 87 24 50 
+
+Science Array before sorting:
+78 89 30 7 21 14 2 2 18 
+
+Math Array after sorting:
+22 24 26 28 50 56 67 78 84 87 
+
+Science Array after sorting:
+2 2 7 14 18 21 30 78 89 
